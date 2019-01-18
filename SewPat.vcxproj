@@ -70,10 +70,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -157,7 +157,10 @@ copy /Y "$(ProjectDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)"</Command>
     <ClCompile Include="SdlEngine.cpp" />
     <ClCompile Include="SewPatApp.cpp" />
     <ClCompile Include="SewPatternDrawer.cpp" />
+    <ClCompile Include="XlsxCell.cpp" />
     <ClCompile Include="XlsxParser.cpp" />
+    <ClCompile Include="XlsxRow.cpp" />
+    <ClCompile Include="XlsxSheet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DxfFileHandler.h" />
@@ -167,10 +170,16 @@ copy /Y "$(ProjectDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)"</Command>
     <ClInclude Include="SdlEngine.h" />
     <ClInclude Include="SewPatApp.h" />
     <ClInclude Include="SewPatternDrawer.h" />
+    <ClInclude Include="XlsxCell.h" />
     <ClInclude Include="XlsxParser.h" />
+    <ClInclude Include="XlsxRow.h" />
+    <ClInclude Include="XlsxSheet.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="rsc\png\button.png" />
+    <Image Include="rsc\png\draw.png" />
+    <Image Include="rsc\png\drop.png" />
+    <Image Include="rsc\png\quit.png" />
+    <Image Include="rsc\png\save.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

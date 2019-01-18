@@ -35,6 +35,15 @@
     <ClCompile Include="DxfFileHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="XlsxSheet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XlsxRow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="XlsxCell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SdlEngine.h">
@@ -61,9 +70,27 @@
     <ClInclude Include="IFileHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="XlsxSheet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XlsxRow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="XlsxCell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="rsc\png\button.png">
+    <Image Include="rsc\png\draw.png">
+      <Filter>rsc\png</Filter>
+    </Image>
+    <Image Include="rsc\png\drop.png">
+      <Filter>rsc\png</Filter>
+    </Image>
+    <Image Include="rsc\png\quit.png">
+      <Filter>rsc\png</Filter>
+    </Image>
+    <Image Include="rsc\png\save.png">
       <Filter>rsc\png</Filter>
     </Image>
   </ItemGroup>
