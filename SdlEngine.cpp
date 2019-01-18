@@ -180,7 +180,7 @@ int SdlEngine::StartLoop()
 			}
 		}
 
-		m_parser.Read(R"(C:\Users\Piotr\Downloads\kontrukcja odzieży.xlsx)");
+		//m_parser.Read(R"(C:\Users\Piotr\Downloads\kontrukcja odzieży.xlsx)");
 
 		// TODO: Create Render Engine
 		//m_drawer.DrawLine(m_renderer);
