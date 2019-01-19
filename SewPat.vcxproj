@@ -170,6 +170,7 @@ copy /Y "$(ProjectDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)"</Command>
     <ClInclude Include="SdlEngine.h" />
     <ClInclude Include="SewPatApp.h" />
     <ClInclude Include="SewPatternDrawer.h" />
+    <ClInclude Include="SSZ_ParserResults.h" />
     <ClInclude Include="XlsxCell.h" />
     <ClInclude Include="XlsxParser.h" />
     <ClInclude Include="XlsxRow.h" />

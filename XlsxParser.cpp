@@ -29,9 +29,11 @@ bool XlsxParser::Read(const std::string& filePath)
 		m_workbook.load(filePath);
 		std::clog << "\n**Reading spread sheet**\n" << '\n';
 
+		auto sheetNum = 0;
  		for (const auto& sheet : m_workbook)
 		{
 			auto name = sheet.title();
+			m_sheetsContainer.emplace_back(std::move(name));
 
 			// get data from the xlsx sheet
 			const int ASCII_A = 65;
@@ -53,13 +55,13 @@ bool XlsxParser::Read(const std::string& filePath)
 
 					m_cellIterator++;
 				}
+				m_sheetsContainer[sheetNum].AddRowsToContainer(m_rowsContainer[m_rowIterator]);
 				m_cellIterator = 0;
 				m_rowIterator++;
-			}
-			m_sheetsContainer.emplace_back(std::move(name)).AddRowsToContainer(m_rowsContainer);
-			
+			}			
 			m_rowsContainer.clear();
 			m_rowIterator = 0;
+			sheetNum++;
 		}
 		std::clog << "\n**Reading spread sheet complete!**\n" << '\n';
 
@@ -88,11 +90,29 @@ bool XlsxParser::Parse()
 		switch (m_patternsContainer[sheet.m_name])
 		{
 		case SUKIENKA_Z_ZASZEWKA:
+		{
 			std::clog << "Detected Read Pattern: SUKIENKA_Z_ZASZEWKA\n";
 
-			//Continue here!
-
-			success = true;
+			// gather the results
+			m_sszResults = SSZ_ParserResults(
+				sheet.m_name,
+				stof(sheet.m_rowsContainer[0].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[1].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[2].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[3].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[4].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[5].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[6].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[7].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[8].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[9].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[10].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[11].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[12].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[13].m_cellsContainer[2].m_content),
+				stof(sheet.m_rowsContainer[14].m_cellsContainer[2].m_content)
+			);
+		}
 			break;
 		case REKAW_DZIANINOWY:
 			std::clog << "Detected Read Pattern: REKAW_DZIANINOWY\n";
@@ -110,6 +130,7 @@ bool XlsxParser::Parse()
 			break;
 		}
 	}
+	success = true;
 	std::clog << "\n**Parsing spread sheet complete!**\n" << '\n';
 
 	return success;

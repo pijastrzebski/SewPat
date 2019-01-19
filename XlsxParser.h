@@ -5,6 +5,7 @@
 #include "XlsxSheet.h"
 #include "XlsxRow.h"
 #include "XlsxCell.h"
+#include "SSZ_ParserResults.h"
 
 #include <string>
 #include <vector>
@@ -34,6 +35,7 @@ protected:
 
 private:
 	xlnt::workbook m_workbook;
+	SSZ_ParserResults m_sszResults;
 
 	int m_cellIterator;
 	int m_rowIterator;

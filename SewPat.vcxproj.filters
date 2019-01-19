@@ -79,6 +79,9 @@
     <ClInclude Include="XlsxCell.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SSZ_ParserResults.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="rsc\png\draw.png">
