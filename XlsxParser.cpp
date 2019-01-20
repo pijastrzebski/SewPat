@@ -4,7 +4,8 @@
 
 XlsxParser::XlsxParser() :
 	m_cellIterator(0),
-	m_rowIterator(0)
+	m_rowIterator(0),
+	m_calculator(std::make_unique<PatternCalculator>())
 {
 	Init();
 }
@@ -81,7 +82,7 @@ bool XlsxParser::Read(const std::string& filePath)
 
 bool XlsxParser::Parse()
 {
-	std::clog << "\n**Parsing spread sheet**\n" << '\n';
+	std::clog << "\n**Start Parsing**\n" << '\n';
 
 	auto success = false;
 
@@ -96,6 +97,7 @@ bool XlsxParser::Parse()
 			// gather the results
 			m_sszResults = SSZ_ParserResults(
 				sheet.m_name,
+				// Upper left table
 				stof(sheet.m_rowsContainer[0].m_cellsContainer[2].m_content),
 				stof(sheet.m_rowsContainer[1].m_cellsContainer[2].m_content),
 				stof(sheet.m_rowsContainer[2].m_cellsContainer[2].m_content),
@@ -110,8 +112,18 @@ bool XlsxParser::Parse()
 				stof(sheet.m_rowsContainer[11].m_cellsContainer[2].m_content),
 				stof(sheet.m_rowsContainer[12].m_cellsContainer[2].m_content),
 				stof(sheet.m_rowsContainer[13].m_cellsContainer[2].m_content),
-				stof(sheet.m_rowsContainer[14].m_cellsContainer[2].m_content)
+				// Top middle table
+				stof(sheet.m_rowsContainer[0].m_cellsContainer[9].m_content),
+				stof(sheet.m_rowsContainer[1].m_cellsContainer[9].m_content),
+				stof(sheet.m_rowsContainer[2].m_cellsContainer[9].m_content),
+				stof(sheet.m_rowsContainer[3].m_cellsContainer[9].m_content),
+				stof(sheet.m_rowsContainer[4].m_cellsContainer[9].m_content),
+				stof(sheet.m_rowsContainer[5].m_cellsContainer[9].m_content),
+				// Rozciagliwosc
+				stof(sheet.m_rowsContainer[6].m_cellsContainer[8].m_content)
 			);
+
+			m_calculator->Calculate(m_sszResults);
 		}
 			break;
 		case REKAW_DZIANINOWY:
@@ -131,7 +143,7 @@ bool XlsxParser::Parse()
 		}
 	}
 	success = true;
-	std::clog << "\n**Parsing spread sheet complete!**\n" << '\n';
+	std::clog << "\n**Parsing Complete!**\n" << '\n';
 
 	return success;
 }

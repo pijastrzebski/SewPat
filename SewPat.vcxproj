@@ -153,7 +153,9 @@ copy /Y "$(ProjectDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="DxfFileHandler.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PatternCalculator.cpp" />
     <ClCompile Include="SdlEngine.cpp" />
     <ClCompile Include="SewPatApp.cpp" />
     <ClCompile Include="SewPatternDrawer.cpp" />
@@ -163,10 +165,15 @@ copy /Y "$(ProjectDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)"</Command>
     <ClCompile Include="XlsxSheet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CalculatedResults.h" />
     <ClInclude Include="DxfFileHandler.h" />
+    <ClInclude Include="EventHandler.h" />
     <ClInclude Include="IDrawer.h" />
+    <ClInclude Include="IEventHandler.h" />
     <ClInclude Include="IFileHandler.h" />
     <ClInclude Include="IParser.h" />
+    <ClInclude Include="IParserResults.h" />
+    <ClInclude Include="PatternCalculator.h" />
     <ClInclude Include="SdlEngine.h" />
     <ClInclude Include="SewPatApp.h" />
     <ClInclude Include="SewPatternDrawer.h" />

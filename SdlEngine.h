@@ -4,7 +4,10 @@
 #include "IParser.h"
 #include "IFileHandler.h"
 #include "SDL_render.h"
+#include "IEventHandler.h"
 
+#include <SDL.h>
+#include <SDL_image.h>
 #include <string>
 #include <vector>
 
@@ -44,8 +47,12 @@ struct Texture
 
 class SdlEngine
 {
+	friend class EventHandler;
 public:
-	SdlEngine(IParser& parser, IDrawer& drawer, IFileHandler& fileHandler) noexcept;
+	SdlEngine(std::unique_ptr<IParser> parser,
+		      std::unique_ptr<IDrawer> drawer,
+		      std::unique_ptr<IFileHandler> fileHandler,
+		      std::unique_ptr<IEventHandler> eventHandler) noexcept;
 	~SdlEngine();
 
 	SdlEngine& Init() const;
@@ -70,11 +77,10 @@ protected:
 	std::vector<Texture> m_textureMap;
 
 private:
-	IParser&      m_parser;
-	IDrawer&      m_drawer;
-	IFileHandler& m_fileHandler;
-
-	EngineState m_state;
+	std::unique_ptr<IParser>       m_parser;
+	std::unique_ptr<IDrawer>       m_drawer;
+	std::unique_ptr<IFileHandler>  m_fileHandler;
+	std::unique_ptr<IEventHandler> m_eventHandler;
 
 	int m_mouseUpX;
 	int m_mouseUpY;
@@ -96,6 +102,9 @@ private:
 	int m_bufferedTextureWidth;
 	int m_bufferedTextureHeight;
 
+	EngineState m_state;
+
+	SDL_Event m_event;
 	SDL_Window *m_mainWindow;
 	SDL_Window *m_drawWindow;
 	SDL_Renderer *m_renderer;

@@ -1,13 +1,14 @@
 #pragma once
 
 #include <string>
+#include "IParserResults.h"
 
-struct SSZ_ParserResults
+struct SSZ_ParserResults : IParserResults
 {
 	SSZ_ParserResults() = default;
 
 	SSZ_ParserResults(
-		std::string name,
+		const std::string& name,
 		float opx,
 		float opp,
 		float ot,
@@ -22,7 +23,13 @@ struct SSZ_ParserResults
 		float RvNv,
 		float Or,
 		float on,
-		float PcR1
+		float dk,
+		float luz1,
+		float luz2,
+		float luz3,
+		float luz4,
+		float luz5,
+		float stretch
 	) :
 		m_name(name),
 		m_opx(opx),
@@ -39,7 +46,13 @@ struct SSZ_ParserResults
 		m_RvNv(RvNv),
 		m_Or(Or),
 		m_on(on),
-		m_PcR1(PcR1)
+		m_dk(dk),
+		m_luz1(luz1),
+		m_luz2(luz2),
+		m_luz3(luz3),
+		m_luz4(luz4),
+		m_luz5(luz5),
+		m_stretch(stretch)
 	{}
 
 	std::string m_name;
@@ -58,5 +71,11 @@ struct SSZ_ParserResults
 		m_RvNv,
 		m_Or,
 		m_on,
-		m_PcR1;
+		m_dk,
+		m_luz1,
+		m_luz2,
+		m_luz3,
+		m_luz4,
+		m_luz5,
+		m_stretch;
 };

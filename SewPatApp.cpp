@@ -3,6 +3,7 @@
 #include "XlsxParser.h"
 #include "SewPatternDrawer.h"
 #include "DxfFileHandler.h"
+#include "EventHandler.h"
 
 #include <fstream>
 
@@ -16,15 +17,15 @@ SewPatApp::~SewPatApp()
 
 int SewPatApp::Run() const
 {
-	auto parser = XlsxParser();
-	auto drawer = SewPatternDrawer();
-	auto dxfFileHandler = DxfFileHandler();
-	SdlEngine engine(parser, drawer, dxfFileHandler);
-
+	SdlEngine engine(std::make_unique<XlsxParser>(),
+					 std::make_unique<SewPatternDrawer>(),
+					 std::make_unique<DxfFileHandler>(),
+					 std::make_unique<EventHandler>());
+	
 	try
 	{
 		engine.Init()
-			.CreateMainWindow()
+			  .CreateMainWindow()
 			  .InitImgSupport()
 			  .CreateRenderer()
 			  .StartLoop();

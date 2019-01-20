@@ -6,6 +6,7 @@
 #include "XlsxRow.h"
 #include "XlsxCell.h"
 #include "SSZ_ParserResults.h"
+#include "PatternCalculator.h"
 
 #include <string>
 #include <vector>
@@ -36,6 +37,7 @@ protected:
 private:
 	xlnt::workbook m_workbook;
 	SSZ_ParserResults m_sszResults;
+	std::unique_ptr<PatternCalculator> m_calculator;
 
 	int m_cellIterator;
 	int m_rowIterator;

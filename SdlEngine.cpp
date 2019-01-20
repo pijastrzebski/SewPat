@@ -1,6 +1,4 @@
 #include "SdlEngine.h"
-#include <SDL.h>
-#include <SDL_image.h>
 //#include <SDL_ttf.h>
 #include "XlsxParser.h"
 #include "SewPatternDrawer.h"
@@ -22,7 +20,6 @@ SdlEngine& SdlEngine::Init() const
 
 int SdlEngine::StartLoop()
 {
-	SDL_Event event;
 	m_state = EngineState::START;
 
 	// prepare menu textures			//TODO: Create texture init method
@@ -33,47 +30,25 @@ int SdlEngine::StartLoop()
 
 	while (m_state != EngineState::STOP)
 	{
-		while (SDL_PollEvent(&event))
+		while (SDL_PollEvent(&m_event))
 		{	
-			// handle main events
-			switch (event.type)			//TODO: Create Handlers
-			{
-			case SDL_QUIT:
-				m_state = EngineState::STOP;
-				break;
-			case SDL_KEYDOWN:
-				std::cout << "Key pressed\n";
-				//m_fileHandler.WriteToFile();
-				CreateDrawWindow();
-				break;
-			case SDL_KEYUP:
-				std::cout << "Key released\n";
-				break;
-			case SDL_DROPFILE:
-				std::string filePath = event.drop.file;
-				std::cout << "Dropped file dir: " << filePath << '\n';
-				auto result = std::async(std::launch::async,
-					[=]() {
-					m_parser.Read(filePath);
-				});		//TODO: Upgrade XlsxParser
-						//TODO: Add SewPat Calculator
-				break;
-			}
+			m_eventHandler->Handle(this);
+
 
 			// handle mouse events
-			if (event.type == SDL_MOUSEBUTTONUP)
+			if (m_event.type == SDL_MOUSEBUTTONUP)
 			{
 				m_isMouseButtonPressed = false;
 			}
 
-			if (event.type == SDL_MOUSEMOTION && !m_isMouseButtonPressed)
+			if (m_event.type == SDL_MOUSEMOTION && !m_isMouseButtonPressed)
 			{
 				// track current mouse pos
 				SDL_GetMouseState(&m_mouseUpX, &m_mouseUpY);
 				std::clog << "X: " << m_mouseUpX << " Y:" << m_mouseUpY << '\n';
 			}
 
-			if (event.type == SDL_MOUSEBUTTONDOWN) 
+			if (m_event.type == SDL_MOUSEBUTTONDOWN) 
 			{
 				m_isMouseButtonPressed = true;
 
@@ -128,15 +103,15 @@ int SdlEngine::StartLoop()
 				}
 			}
 			
-			if (event.type == SDL_MOUSEMOTION && m_isMouseButtonPressed)
+			if (m_event.type == SDL_MOUSEMOTION && m_isMouseButtonPressed)
 			{
 				SDL_GetMouseState(&m_mouseDownX, &m_mouseDownY);
 			}
 			
 			// handle window events
-			if (event.window.windowID == m_mainWindowID)
+			if (m_event.window.windowID == m_mainWindowID)
 			{
-				switch (event.window.event)
+				switch (m_event.window.event)
 				{
 				case SDL_WINDOWEVENT_CLOSE:			
 					std::clog << "Close Main Window event\n";
@@ -148,7 +123,7 @@ int SdlEngine::StartLoop()
 			}
 			else
 			{
-				switch (event.window.event)
+				switch (m_event.window.event)
 				{
 				case SDL_WINDOWEVENT_CLOSE:
 					std::clog << "Hide Draw Window event\n";
@@ -159,7 +134,7 @@ int SdlEngine::StartLoop()
 				}
 			}
 
-			if (event.type == SDL_MOUSEMOTION)
+			if (m_event.type == SDL_MOUSEMOTION)
 			{
 				// add texture fancy effects
 				for (auto& t : m_textureMap)
@@ -393,17 +368,31 @@ void SdlEngine::SetBufferedTextureSize()
 	}
 }
 
-SdlEngine::SdlEngine(IParser& parser, IDrawer& drawer, IFileHandler& fileHandler) noexcept :
-	m_parser(parser),
-	m_drawer(drawer),
-	m_fileHandler(fileHandler),
+SdlEngine::SdlEngine(std::unique_ptr<IParser> parser,
+					 std::unique_ptr<IDrawer> drawer,
+					 std::unique_ptr<IFileHandler> fileHandler,
+					 std::unique_ptr<IEventHandler> eventHandler
+) noexcept :
+	m_parser(std::move(parser)),
+	m_drawer(std::move(drawer)),
+	m_fileHandler(std::move(fileHandler)),
+	m_eventHandler(std::move(eventHandler)),
 	m_title("SewPat App V.1.0"),
-	m_posX(300),
+	m_posX(300),  // there's no reason why 300x300
 	m_posY(300),
 	m_width(500), // Fibonacci's ratio
 	m_height(800),
 	m_mainWindow(nullptr),
-	m_renderer(nullptr)
+	m_renderer(nullptr),
+	m_mouseUpX(0),
+	m_mouseUpY(0),
+	m_mouseDownX(0),
+	m_mouseDownY(0),
+	m_isMouseButtonPressed(false),
+	m_deltaX(0),
+	m_deltaY(0),
+	m_mainWindowID(0),
+	m_drawWindowID(0)
 {}
 
 
