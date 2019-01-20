@@ -5,6 +5,8 @@
 #include "IFileHandler.h"
 #include "SDL_render.h"
 #include "IEventHandler.h"
+#include "PatternCalculator.h"
+#include "CalculatedResults.h"
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -77,10 +79,11 @@ protected:
 	std::vector<Texture> m_textureMap;
 
 private:
-	std::unique_ptr<IParser>       m_parser;
-	std::unique_ptr<IDrawer>       m_drawer;
-	std::unique_ptr<IFileHandler>  m_fileHandler;
-	std::unique_ptr<IEventHandler> m_eventHandler;
+	std::unique_ptr<IParser>           m_parser;
+	std::unique_ptr<IDrawer>           m_drawer;
+	std::unique_ptr<IFileHandler>      m_fileHandler;
+	std::unique_ptr<IEventHandler>     m_eventHandler;
+	std::unique_ptr<PatternCalculator> m_calculator;
 
 	int m_mouseUpX;
 	int m_mouseUpY;
@@ -103,6 +106,9 @@ private:
 	int m_bufferedTextureHeight;
 
 	EngineState m_state;
+
+	CalculatedResults m_calculatedResults;
+	bool m_isCalculationDone;
 
 	SDL_Event m_event;
 	SDL_Window *m_mainWindow;

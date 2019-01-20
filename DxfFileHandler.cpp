@@ -11,7 +11,7 @@ DxfFileHandler::~DxfFileHandler()
 {
 }
 
-void DxfFileHandler::WriteToFile() const
+void DxfFileHandler::WriteToFile(const CalculatedResults& results) const
 {
 	try
 	{

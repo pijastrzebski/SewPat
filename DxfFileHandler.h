@@ -8,6 +8,6 @@ public:
 	DxfFileHandler();
 	~DxfFileHandler();
 
-	void WriteToFile() const override;
+	void WriteToFile(const CalculatedResults&) const override;
 };
 

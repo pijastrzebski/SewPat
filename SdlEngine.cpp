@@ -31,130 +31,9 @@ int SdlEngine::StartLoop()
 	while (m_state != EngineState::STOP)
 	{
 		while (SDL_PollEvent(&m_event))
-		{	
+		{
 			m_eventHandler->Handle(this);
-
-
-			// handle mouse events
-			if (m_event.type == SDL_MOUSEBUTTONUP)
-			{
-				m_isMouseButtonPressed = false;
-			}
-
-			if (m_event.type == SDL_MOUSEMOTION && !m_isMouseButtonPressed)
-			{
-				// track current mouse pos
-				SDL_GetMouseState(&m_mouseUpX, &m_mouseUpY);
-				std::clog << "X: " << m_mouseUpX << " Y:" << m_mouseUpY << '\n';
-			}
-
-			if (m_event.type == SDL_MOUSEBUTTONDOWN) 
-			{
-				m_isMouseButtonPressed = true;
-
-				for (auto& t : m_textureMap)
-				{
-					switch (t.m_eName)
-					{
-					case Texture::QUIT:
-						if ((m_mouseUpX > t.m_rect.x) &&
-							(m_mouseUpX < t.m_rect.x + t.m_rect.w - 10) &&
-							(m_mouseUpY > t.m_rect.y) &&
-							(m_mouseUpY < t.m_rect.y + t.m_rect.h - 10)
-							)
-						{
-							std::clog << "Clicked on Quit button\n";
-							m_state = EngineState::STOP;
-						}
-						break;
-					case Texture::DRAW:
-						if ((m_mouseUpX > t.m_rect.x) &&
-							(m_mouseUpX < t.m_rect.x + t.m_rect.w - 10) &&
-							(m_mouseUpY > t.m_rect.y) &&
-							(m_mouseUpY < t.m_rect.y + t.m_rect.h - 10)
-							)
-						{
-							std::clog << "Clicked on Draw button\n";
-						}
-						break;
-					case Texture::DROP:
-						if ((m_mouseUpX > t.m_rect.x) &&
-							(m_mouseUpX < t.m_rect.x + t.m_rect.w - 10) &&
-							(m_mouseUpY > t.m_rect.y) &&
-							(m_mouseUpY < t.m_rect.y + t.m_rect.h - 10)
-							)
-						{
-							std::clog << "Clicked on Drop button\n";
-						}
-						break;
-					case Texture::SAVE:
-						if ((m_mouseUpX > t.m_rect.x) &&
-							(m_mouseUpX < t.m_rect.x + t.m_rect.w - 10) &&
-							(m_mouseUpY > t.m_rect.y) &&
-							(m_mouseUpY < t.m_rect.y + t.m_rect.h - 10)
-							)
-						{
-							std::clog << "Clicked on Save button\n";
-						}
-						break;
-					default:
-						break;
-					}
-				}
-			}
-			
-			if (m_event.type == SDL_MOUSEMOTION && m_isMouseButtonPressed)
-			{
-				SDL_GetMouseState(&m_mouseDownX, &m_mouseDownY);
-			}
-			
-			// handle window events
-			if (m_event.window.windowID == m_mainWindowID)
-			{
-				switch (m_event.window.event)
-				{
-				case SDL_WINDOWEVENT_CLOSE:			
-					std::clog << "Close Main Window event\n";
-					m_state = EngineState::STOP;
-					break;
-				default:
-					break;
-				}			
-			}
-			else
-			{
-				switch (m_event.window.event)
-				{
-				case SDL_WINDOWEVENT_CLOSE:
-					std::clog << "Hide Draw Window event\n";
-					SDL_HideWindow(m_drawWindow);
-					break;
-				default:
-					break;
-				}
-			}
-
-			if (m_event.type == SDL_MOUSEMOTION)
-			{
-				// add texture fancy effects
-				for (auto& t : m_textureMap)
-				{
-					if ((m_mouseUpX > t.m_rect.x) &&
-						(m_mouseUpX < t.m_rect.x + t.m_rect.w - 10) &&
-						(m_mouseUpY > t.m_rect.y) &&
-						(m_mouseUpY < t.m_rect.y + t.m_rect.h - 10)
-						)
-					{
-						SetTextureColor(t.m_texture, 255, 215, 0);
-					}
-					else
-					{
-						SetTextureColor(t.m_texture, 255, 255, 255);
-					}
-				}
-			}
 		}
-
 		//m_parser.Read(R"(C:\Users\Piotr\Downloads\kontrukcja odzieży.xlsx)");
 
 		// TODO: Create Render Engine
@@ -392,7 +271,8 @@ SdlEngine::SdlEngine(std::unique_ptr<IParser> parser,
 	m_deltaX(0),
 	m_deltaY(0),
 	m_mainWindowID(0),
-	m_drawWindowID(0)
+	m_drawWindowID(0),
+	m_isCalculationDone(false)
 {}
 
 

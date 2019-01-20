@@ -78,4 +78,8 @@ struct SSZ_ParserResults : IParserResults
 		m_luz4,
 		m_luz5,
 		m_stretch;
+
+	void PrintResult() override
+	{
+	}
 };

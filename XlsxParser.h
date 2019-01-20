@@ -6,7 +6,7 @@
 #include "XlsxRow.h"
 #include "XlsxCell.h"
 #include "SSZ_ParserResults.h"
-#include "PatternCalculator.h"
+//#include "PatternCalculator.h"
 
 #include <string>
 #include <vector>
@@ -28,6 +28,7 @@ public:
 	void Init() override;
 	bool Read(const std::string& filePath) override;
 	bool Parse() override;
+	IParserResults* GetResults() override { return m_sszResults.get(); };
 
 protected:
 	std::vector<XlsxSheet> m_sheetsContainer;
@@ -36,8 +37,8 @@ protected:
 
 private:
 	xlnt::workbook m_workbook;
-	SSZ_ParserResults m_sszResults;
-	std::unique_ptr<PatternCalculator> m_calculator;
+	std::unique_ptr<IParserResults> m_sszResults;
+	//std::unique_ptr<PatternCalculator> m_calculator;
 
 	int m_cellIterator;
 	int m_rowIterator;

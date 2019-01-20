@@ -1,6 +1,8 @@
 #pragma once
 
+struct CalculatedResults;
+
 struct IFileHandler
 {
-	virtual void WriteToFile() const = 0;
+	virtual void WriteToFile(const CalculatedResults&) const = 0;
 };

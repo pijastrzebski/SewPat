@@ -4,8 +4,7 @@
 
 XlsxParser::XlsxParser() :
 	m_cellIterator(0),
-	m_rowIterator(0),
-	m_calculator(std::make_unique<PatternCalculator>())
+	m_rowIterator(0)
 {
 	Init();
 }
@@ -66,8 +65,7 @@ bool XlsxParser::Read(const std::string& filePath)
 		}
 		std::clog << "\n**Reading spread sheet complete!**\n" << '\n';
 
-		Parse();
-		success = true;
+		success = Parse();
 	}
 	catch (const std::exception& ex)
 	{
@@ -95,7 +93,7 @@ bool XlsxParser::Parse()
 			std::clog << "Detected Read Pattern: SUKIENKA_Z_ZASZEWKA\n";
 
 			// gather the results
-			m_sszResults = SSZ_ParserResults(
+			m_sszResults = std::make_unique<SSZ_ParserResults>(
 				sheet.m_name,
 				// Upper left table
 				stof(sheet.m_rowsContainer[0].m_cellsContainer[2].m_content),
@@ -123,7 +121,7 @@ bool XlsxParser::Parse()
 				stof(sheet.m_rowsContainer[6].m_cellsContainer[8].m_content)
 			);
 
-			m_calculator->Calculate(m_sszResults);
+			//auto results = m_calculator->Calculate(m_sszResults);
 		}
 			break;
 		case REKAW_DZIANINOWY:
