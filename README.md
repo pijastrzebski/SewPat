@@ -1,4 +1,4 @@
-# SewPat - Windows Gui Sewing Patterns App written in C++
+# SewPat - Gui Sewing Patterns App written in C++
 
 Used libs:
 1. SDL2 - https://www.libsdl.org/download-2.0.php
